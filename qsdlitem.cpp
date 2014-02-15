@@ -19,11 +19,12 @@ QSdlWindow *QSdlItem::window() const
 
 void QSdlItem::render()
 {
-    qDebug() << "Render for " << this;
+    qDebug() << "Render for " << this << " window " << window();
     foreach (QObject *child, children()) {
         QSdlItem *item = qobject_cast<QSdlItem *>(child);
         if (!item)
             continue;
+        qDebug() << "Rendering for " << item << " window " << item->m_window;
         item->render();
     }
 }
@@ -49,6 +50,14 @@ void QSdlItem::data_append(QQmlListProperty<QObject> *prop, QObject *object)
     qDebug() << "appending " << fo << " to " << that;
     fo->setParent(that);
     fo->m_window = that->m_window;
+
+    // change m_window of all children, too
+    foreach (QObject *c, fo->children()) {
+        QSdlItem *citem = qobject_cast<QSdlItem *>(c);
+        if (!citem)
+            continue;
+        citem->m_window = that->m_window;
+    }
 }
 
 int QSdlItem::data_count(QQmlListProperty<QObject> *prop)
