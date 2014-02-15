@@ -56,6 +56,16 @@ int main(int argc, char **argv)
                     win->mouseRelease(ev->x, ev->y);
                     break;
                 }
+                case SDL_WINDOWEVENT: {
+                    SDL_WindowEvent *ev = reinterpret_cast<SDL_WindowEvent *>(&se);
+                    switch (ev->event) {
+                        case SDL_WINDOWEVENT_SIZE_CHANGED:
+                            win->setWidth(ev->data1);
+                            win->setHeight(ev->data2);
+                            break;
+                    }
+                    break;
+                }
             }
         }
 

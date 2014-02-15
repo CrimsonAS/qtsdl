@@ -14,7 +14,7 @@ QSdlWindow::QSdlWindow(QObject *parent)
     setWidth(640);
     setHeight(480);
 
-    m_sdl_window = SDL_CreateWindow("QSdlWindow", x(), y(), width(), height(), SDL_WINDOW_SHOWN);
+    m_sdl_window = SDL_CreateWindow("QSdlWindow", x(), y(), width(), height(), SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (!m_sdl_window) {
         qmlInfo(this) << "SDL_CreateWindow Error: " << SDL_GetError();
         return;
