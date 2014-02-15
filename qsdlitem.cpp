@@ -13,8 +13,37 @@ QSdlItem::~QSdlItem()
 
 QSdlWindow *QSdlItem::window() const
 {
-    qDebug() << m_window;
     return m_window;
+}
+
+int QSdlItem::x() const
+{
+    return m_x;
+}
+
+void QSdlItem::setX(int newX)
+{
+    qDebug() << "Changing X to " << newX;
+    if (m_x == newX)
+        return;
+
+    m_x = newX;
+    emit xChanged();
+}
+
+int QSdlItem::y() const
+{
+    return m_y;
+}
+
+void QSdlItem::setY(int newY)
+{
+    qDebug() << "Changing Y to " << newY;
+    if (m_y == newY)
+        return;
+
+    m_y = newY;
+    emit yChanged();
 }
 
 void QSdlItem::render()
