@@ -46,14 +46,20 @@ void QSdlItem::setY(int newY)
     emit yChanged();
 }
 
+// #define RENDER_DEBUG
+
 void QSdlItem::render()
 {
+#ifdef RENDER_DEBUG
     qDebug() << "Render for " << this << " window " << window();
+#endif
     foreach (QObject *child, children()) {
         QSdlItem *item = qobject_cast<QSdlItem *>(child);
         if (!item)
-            continue;
+        continue;
+#ifdef RENDER_DEBUG
         qDebug() << "Rendering for " << item << " window " << item->m_window;
+#endif
         item->render();
     }
 }
