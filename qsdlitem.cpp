@@ -110,4 +110,39 @@ void QSdlItem::data_clear(QQmlListProperty<QObject> *prop)
     }
 }
 
+bool QSdlItem::mousePress(int mx, int my)
+{
+    // first, see if a child wants to handle it
+    foreach (QObject *obj, children()) {
+        QSdlItem *it = qobject_cast<QSdlItem *>(obj);
+        if (it && it->mousePress(mx, my))
+            return true;
+    }
+
+    if (mx >= x() && my >= y()) {
+        qDebug() << "Pressed " << this;
+        emit pressed();
+        return true;
+    }
+
+    return false;
+}
+
+bool QSdlItem::mouseRelease(int mx, int my)
+{
+    // first, see if a child wants to handle it
+    foreach (QObject *obj, children()) {
+        QSdlItem *it = qobject_cast<QSdlItem *>(obj);
+        if (it && it->mouseRelease(mx, my))
+            return true;
+    }
+
+    if (mx >= x() && my >= y()) {
+        qDebug() << "Released " << this;
+        emit released();
+        // TODO: emit clicked() if the initial press and the release was on us
+        return true;
+    }
+    return false;
+}
 

@@ -5,8 +5,13 @@ Window {
         source: "abmp.bmp"
 
         Rectangle {
-            x:  Math.floor((Math.random()*500)+1);
-            y:  Math.floor((Math.random()*500)+1);
+            x:  10
+            y:  10
+
+            onPressed: {
+                x = x + 10
+                y = y + 10
+            }
         }
     }
 }

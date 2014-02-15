@@ -43,8 +43,19 @@ int main(int argc, char **argv)
             switch (se.type) {
                 case SDL_QUIT:
                 case SDL_KEYDOWN:
-                case SDL_MOUSEBUTTONDOWN:
                     quit = true;
+                    break;
+                case SDL_MOUSEBUTTONDOWN: {
+                    // TODO: button
+                    SDL_MouseButtonEvent *ev = reinterpret_cast<SDL_MouseButtonEvent *>(&se);
+                    win->mousePress(ev->x, ev->y);
+                    break;
+                }
+                case SDL_MOUSEBUTTONUP: {
+                    SDL_MouseButtonEvent *ev = reinterpret_cast<SDL_MouseButtonEvent *>(&se);
+                    win->mouseRelease(ev->x, ev->y);
+                    break;
+                }
             }
         }
 

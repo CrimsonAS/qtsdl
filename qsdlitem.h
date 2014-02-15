@@ -22,6 +22,8 @@ public:
     QSdlWindow *window() const;
 
     virtual void render();
+    virtual bool mousePress(int x, int y);
+    virtual bool mouseRelease(int x, int y);
 
     QQmlListProperty<QObject> data();
     static void data_append(QQmlListProperty<QObject> *, QObject *);
@@ -37,6 +39,9 @@ public:
 signals:
     void xChanged();
     void yChanged();
+
+    void pressed();
+    void released();
 
 protected:
     QSdlWindow *m_window;
