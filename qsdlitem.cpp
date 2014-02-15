@@ -146,7 +146,13 @@ bool QSdlItem::mousePress(int mx, int my)
             return true;
     }
 
-    if (mx >= x() && my >= y()) {
+    int ix = mx - x();
+    int iy = my - y();
+
+    qDebug() << ix << iy << width() << height();
+
+    if (ix >= 0 && ix <= width() &&
+        iy >= 0 && iy <= height()) {
         qDebug() << "Pressed " << this;
         emit pressed();
         return true;
@@ -163,7 +169,11 @@ bool QSdlItem::mouseRelease(int mx, int my)
             return true;
     }
 
-    if (mx >= x() && my >= y()) {
+    int ix = mx - x();
+    int iy = my - y();
+
+    if (ix >= 0 && ix <= width() &&
+        iy >= 0 && iy <= height()) {
         qDebug() << "Released " << this;
         emit released();
         // TODO: emit clicked() if the initial press and the release was on us
