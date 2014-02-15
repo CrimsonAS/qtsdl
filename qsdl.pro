@@ -17,9 +17,11 @@ SOURCES += \
     main.cpp \
     qsdlitem.cpp \
     qsdlwindow.cpp \
-    qsdlimage.cpp
+    qsdlimage.cpp \
+    qsdlrectangle.cpp
 
 HEADERS += \
     qsdlitem.h \
     qsdlwindow.h \
-    qsdlimage.h
+    qsdlimage.h \
+    qsdlrectangle.h

@@ -6,6 +6,7 @@
 #include "qsdlwindow.h"
 #include "qsdlitem.h"
 #include "qsdlimage.h"
+#include "qsdlrectangle.h"
 
 int main(int argc, char **argv)
 {
@@ -18,6 +19,7 @@ int main(int argc, char **argv)
 
     qmlRegisterType<QSdlWindow>("Sdl", 2, 0, "Window");
     qmlRegisterType<QSdlImage>("Sdl", 2, 0, "Image");
+    qmlRegisterType<QSdlRectangle>("Sdl", 2, 0, "Rectangle");
 
     QQmlEngine e;
     QQmlComponent c(&e, QUrl::fromLocalFile("test.qml"));
