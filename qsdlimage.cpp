@@ -42,10 +42,8 @@ void QSdlImage::setSource(const QUrl &source)
 void QSdlImage::render()
 {
     if (!m_texture) {
-    //    SDL_Surface *tmp = SDL_LoadBMP("abmp.bmp");
         SDL_Surface *tmp = SDL_LoadBMP(QFile::encodeName(m_source.toLocalFile()).constData());
         if (!tmp) {
-            // TODO: error str
             qmlInfo(this) << "Error loading " << m_source << SDL_GetError();
             return;
         }
@@ -54,7 +52,6 @@ void QSdlImage::render()
         SDL_FreeSurface(tmp);
     }
 
-    qDebug() << "Rendering texture";
     SDL_RenderCopy(window()->renderer(), m_texture, NULL, NULL);
     QSdlItem::render();
 }

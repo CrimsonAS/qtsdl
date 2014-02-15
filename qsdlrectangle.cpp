@@ -29,7 +29,6 @@ void QSdlRectangle::setColor(const QColor &color)
 void QSdlRectangle::render()
 {
     SDL_Rect rect;
-    qDebug() << "Rendering at " << x() << y();
     rect.x = x();
     rect.y = y();
     rect.w = 100;

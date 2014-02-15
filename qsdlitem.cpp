@@ -76,7 +76,6 @@ void QSdlItem::data_append(QQmlListProperty<QObject> *prop, QObject *object)
     }
 
     QSdlItem *that = static_cast<QSdlItem *>(prop->object);
-    qDebug() << "appending " << fo << " to " << that;
     fo->setParent(that);
     fo->m_window = that->m_window;
 
