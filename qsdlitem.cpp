@@ -46,6 +46,35 @@ void QSdlItem::setY(int newY)
     emit yChanged();
 }
 
+int QSdlItem::width() const
+{
+    return m_width;
+}
+
+void QSdlItem::setWidth(int newWidth)
+{
+    if (m_width == newWidth)
+        return;
+
+    m_width = newWidth;
+    emit widthChanged();
+}
+
+int QSdlItem::height() const
+{
+    return m_height;
+}
+
+void QSdlItem::setHeight(int newHeight)
+{
+    if (m_height == newHeight)
+        return;
+
+    m_height = newHeight;
+    emit heightChanged();
+}
+
+
 // #define RENDER_DEBUG
 
 void QSdlItem::render()

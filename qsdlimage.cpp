@@ -52,7 +52,8 @@ void QSdlImage::render()
         SDL_FreeSurface(tmp);
     }
 
-    SDL_RenderCopy(window()->renderer(), m_texture, NULL, NULL);
+    SDL_Rect drect = { x(), y(), width(), height() };
+    SDL_RenderCopy(window()->renderer(), m_texture, NULL, &drect);
     QSdlItem::render();
 }
 

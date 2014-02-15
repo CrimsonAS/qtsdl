@@ -9,7 +9,12 @@ QSdlWindow::QSdlWindow(QObject *parent)
     , m_sdl_window(0)
     , m_sdl_renderer(0)
 {
-    m_sdl_window = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    setX(100);
+    setY(100);
+    setWidth(640);
+    setHeight(480);
+
+    m_sdl_window = SDL_CreateWindow("Hello World!", x(), y(), width(), height(), SDL_WINDOW_SHOWN);
     if (!m_sdl_window) {
         qmlInfo(this) << "SDL_CreateWindow Error: " << SDL_GetError();
         return;

@@ -12,6 +12,8 @@ class QSdlItem : public QObject
 
     Q_PROPERTY(int x READ x WRITE setX NOTIFY xChanged)
     Q_PROPERTY(int y READ y WRITE setY NOTIFY yChanged)
+    Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
+    Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
     Q_PROPERTY(QQmlListProperty<QObject> data READ data DESIGNABLE false)
 
     Q_CLASSINFO("DefaultProperty",  "data")
@@ -33,12 +35,20 @@ public:
 
     int x() const;
     int y() const;
-    void setX(int newX);
-    void setY(int newY);
+    void setX(int x);
+    void setY(int y);
+
+    int width() const;
+    int height() const;
+    void setWidth(int width);
+    void setHeight(int height);
 
 signals:
     void xChanged();
     void yChanged();
+
+    void widthChanged();
+    void heightChanged();
 
     void pressed();
     void released();
@@ -48,6 +58,8 @@ protected:
     QQmlListProperty<QObject> m_data;
     int m_x;
     int m_y;
+    int m_width;
+    int m_height;
 };
 
 #endif

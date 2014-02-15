@@ -31,8 +31,8 @@ void QSdlRectangle::render()
     SDL_Rect rect;
     rect.x = x();
     rect.y = y();
-    rect.w = 100;
-    rect.h = 100;
+    rect.w = width();
+    rect.h = height();
     SDL_SetRenderDrawColor(window()->renderer(), color().red(), color().green(), color().blue(), color().alpha());
     SDL_RenderFillRect(window()->renderer(), &rect);
     QSdlItem::render();
