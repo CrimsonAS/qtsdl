@@ -24,7 +24,6 @@ int QSdlItem::x() const
 
 void QSdlItem::setX(int newX)
 {
-    qDebug() << "Changing X to " << newX;
     if (m_x == newX)
         return;
 
@@ -39,7 +38,6 @@ int QSdlItem::y() const
 
 void QSdlItem::setY(int newY)
 {
-    qDebug() << "Changing Y to " << newY;
     if (m_y == newY)
         return;
 
@@ -148,8 +146,6 @@ bool QSdlItem::mousePress(int mx, int my)
 
     int ix = mx - x();
     int iy = my - y();
-
-    qDebug() << ix << iy << width() << height();
 
     if (ix >= 0 && ix <= width() &&
         iy >= 0 && iy <= height()) {
