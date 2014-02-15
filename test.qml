@@ -7,8 +7,8 @@ Window {
 
     Image {
         source: "abmp.bmp"
-        width: win.width
-        height: win.height
+        width: parent.width
+        height: parent.height
 
         Rectangle {
             x:  10

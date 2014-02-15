@@ -4,6 +4,7 @@
 QSdlItem::QSdlItem(QObject *parent)
     : QObject(parent)
     , m_window(0)
+    , m_parentItem(0)
 {
 }
 
@@ -82,10 +83,7 @@ void QSdlItem::render()
 #ifdef RENDER_DEBUG
     qDebug() << "Render for " << this << " window " << window();
 #endif
-    foreach (QObject *child, children()) {
-        QSdlItem *item = qobject_cast<QSdlItem *>(child);
-        if (!item)
-        continue;
+    foreach (QSdlItem *item, m_childItems) {
 #ifdef RENDER_DEBUG
         qDebug() << "Rendering for " << item << " window " << item->m_window;
 #endif
@@ -111,45 +109,40 @@ void QSdlItem::data_append(QQmlListProperty<QObject> *prop, QObject *object)
     }
 
     QSdlItem *that = static_cast<QSdlItem *>(prop->object);
-    fo->setParent(that);
+    fo->setParentItem(that);
     fo->m_window = that->m_window;
 
     // change m_window of all children, too
-    foreach (QObject *c, fo->children()) {
-        QSdlItem *citem = qobject_cast<QSdlItem *>(c);
-        if (!citem)
-            continue;
+    foreach (QSdlItem *citem, fo->m_childItems) {
         citem->m_window = that->m_window;
     }
 }
 
 int QSdlItem::data_count(QQmlListProperty<QObject> *prop)
 {
-    // TODO: don't abuse children for this
     QSdlItem *that = static_cast<QSdlItem *>(prop->object);
-    return that->children().count();
+    return that->m_childItems.count();
 }
 
 QObject *QSdlItem::data_at(QQmlListProperty<QObject> *prop, int idx)
 {
     QSdlItem *that = static_cast<QSdlItem *>(prop->object);
-    return that->children().at(idx);
+    return that->m_childItems.at(idx);
 }
 
 void QSdlItem::data_clear(QQmlListProperty<QObject> *prop)
 {
     QSdlItem *that = static_cast<QSdlItem *>(prop->object);
-    foreach (QObject *obj, that->children()) {
-        obj->setParent(0);
+    foreach (QSdlItem *obj, that->m_childItems) {
+        obj->setParentItem(0);
     }
 }
 
 bool QSdlItem::mousePress(int mx, int my)
 {
     // first, see if a child wants to handle it
-    foreach (QObject *obj, children()) {
-        QSdlItem *it = qobject_cast<QSdlItem *>(obj);
-        if (it && it->mousePress(mx, my))
+    foreach (QSdlItem *it, m_childItems) {
+        if (it->mousePress(mx, my))
             return true;
     }
 
@@ -165,9 +158,8 @@ bool QSdlItem::mousePress(int mx, int my)
 bool QSdlItem::mouseRelease(int mx, int my)
 {
     // first, see if a child wants to handle it
-    foreach (QObject *obj, children()) {
-        QSdlItem *it = qobject_cast<QSdlItem *>(obj);
-        if (it && it->mouseRelease(mx, my))
+    foreach (QSdlItem *it, m_childItems) {
+        if (it->mouseRelease(mx, my))
             return true;
     }
 
@@ -180,3 +172,25 @@ bool QSdlItem::mouseRelease(int mx, int my)
     return false;
 }
 
+QObject *QSdlItem::parentItem() const
+{
+    return m_parentItem;
+}
+
+void QSdlItem::setParentItem(QObject *pi)
+{
+    if (m_parentItem == pi)
+        return;
+
+    QSdlItem *p = qobject_cast<QSdlItem*>(pi);
+    if (!p)
+        return;
+
+
+    if (m_parentItem)
+        m_parentItem->m_childItems.remove(m_parentItem->m_childItems.indexOf(this));
+    m_parentItem = p;
+    if (p)
+        p->m_childItems.append(this);
+    emit parentItemChanged();
+}

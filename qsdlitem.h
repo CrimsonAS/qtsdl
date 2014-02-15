@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QQmlListProperty>
+#include <QVector>
 
 class QSdlWindow;
 
@@ -10,6 +11,8 @@ class QSdlItem : public QObject
 {
     Q_OBJECT
 
+    // why can't i type this as QSdlItem?!
+    Q_PROPERTY(QObject *parent READ parentItem WRITE setParentItem NOTIFY parentItemChanged)
     Q_PROPERTY(int x READ x WRITE setX NOTIFY xChanged)
     Q_PROPERTY(int y READ y WRITE setY NOTIFY yChanged)
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
@@ -43,6 +46,9 @@ public:
     void setWidth(int width);
     void setHeight(int height);
 
+    QObject *parentItem() const;
+    void setParentItem(QObject *parent);
+
 signals:
     void xChanged();
     void yChanged();
@@ -53,8 +59,12 @@ signals:
     void pressed();
     void released();
 
+    void parentItemChanged();
+
 protected:
     QSdlWindow *m_window;
+    QSdlItem *m_parentItem;
+    QVector<QSdlItem *> m_childItems;
     QQmlListProperty<QObject> m_data;
     int m_x;
     int m_y;
