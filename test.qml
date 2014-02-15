@@ -2,6 +2,8 @@ import Sdl 2.0
 
 Window {
     id: win
+    title: "This is a test"
+    property int clicks
 
     Image {
         source: "abmp.bmp"
@@ -17,6 +19,8 @@ Window {
             onPressed: {
                 x = x + 10
                 y = y + 10
+
+                win.title = "You have clicked the rectangle " + ++win.clicks + " times"
             }
         }
     }

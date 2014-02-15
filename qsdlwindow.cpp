@@ -14,7 +14,7 @@ QSdlWindow::QSdlWindow(QObject *parent)
     setWidth(640);
     setHeight(480);
 
-    m_sdl_window = SDL_CreateWindow("Hello World!", x(), y(), width(), height(), SDL_WINDOW_SHOWN);
+    m_sdl_window = SDL_CreateWindow("QSdlWindow", x(), y(), width(), height(), SDL_WINDOW_SHOWN);
     if (!m_sdl_window) {
         qmlInfo(this) << "SDL_CreateWindow Error: " << SDL_GetError();
         return;
@@ -51,4 +51,13 @@ void QSdlWindow::render()
     SDL_RenderPresent(m_sdl_renderer);
 }
 
+QString QSdlWindow::title() const
+{
+    const char *t = SDL_GetWindowTitle(m_sdl_window);
+    return QString::fromUtf8(t);
+}
 
+void QSdlWindow::setTitle(const QString &title)
+{
+    SDL_SetWindowTitle(m_sdl_window, title.toUtf8().constData());
+}
