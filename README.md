@@ -1,7 +1,9 @@
 qtsdl
 =====
 
-Just a silly proof-of-concept. Nothing much to see here.
+Just a silly proof-of-concept showing that QML can be successfully used to deal
+with alternative item sets instead of QtQuick. Nothing much to see here, and
+probably not all that useful.
 
 license
 =======
